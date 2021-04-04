@@ -1,0 +1,895 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+#include <fstream>
+#include <windows.h>
+#include <ctime>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+HANDLE N = GetStdHandle(STD_OUTPUT_HANDLE);
+
+struct profile
+{
+	string name; 
+	char gender;    
+	int group;      
+	int id;          
+	int grades[8];    
+	string depart;
+	string date;   
+	float average;
+};
+
+
+
+	
+
+string currentTime()
+{
+	string temp;
+	time_t seconds = time(NULL);
+	tm* timeinfo = localtime(&seconds);
+	temp = asctime(timeinfo);
+	return temp;
+}
+
+void showAll(fstream& file) {
+
+    file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+		for (int i = 0; i < 10; i++)
+		{
+			
+
+
+				cout << "Name: " << student[i].name << endl;
+				cout << "ID: " << student[i].id << endl;
+				cout << "Group: " << student[i].group << endl;
+				cout << "Gender: " << student[i].gender << endl;
+				cout << "Form of education: " << student[i].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[i].grades[j] << " ";
+				cout << endl;
+				
+		
+		}
+
+	}
+	file.close();
+}
+void groupSearch(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+		
+	int n;
+	SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	cin >> n;
+	SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	profile student[10];
+	for (int i = 0; i < 10; i++)
+	{
+		getline(file, student[i].name);
+		file >> student[i].group >> student[i].id >> student[i].gender;
+		file >> student[i].depart;
+		for (int j = 0; j < 8; j++)
+			file >> student[i].grades[j];
+		getline(file, student[i].date);
+	}
+	
+	file.close();
+
+	int temp = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		if ((student[i].group) == n)
+		{
+			cout << "Name: " << student[i].name << endl;
+			cout << "ID: " << student[i].id<< endl;
+			cout << "Group: " << student[i].group << endl;
+			cout << "Gender: " << student[i].gender << endl;
+			cout << "Form of education: " << student[i].depart << endl;
+			cout << "Term grades: ";
+			for (int j = 0; j < 8; j++)
+				cout << student[i].grades[j] << " ";
+			cout << endl;
+			temp++;
+		}
+	}
+	if (temp == 0)
+		cout << "No records were found" << endl;
+	}
+}
+
+
+void dateSearch(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+		
+		string n;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Day ";
+		SetConsoleTextAttribute(N, FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "(Mon, Tue, Wed, Thu, Fri, Sat, Sun): ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cin >> n;
+		cout << endl;
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Records made on ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << n << endl;
+
+
+	
+
+		for (int i = 0; i < 10; i++)
+		{
+			if (student[i].date.find(n) != string::npos) {
+
+				cout << "Name: " << student[i].name << endl;
+				cout << "ID: " << student[i].id << endl;
+				cout << "Group: " << student[i].group << endl;
+				cout << "Gender: " << student[i].gender << endl;
+				cout << "Form of education: " << student[i].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[i].grades[j] << " ";
+				cout << endl;
+				cout << endl;
+
+			}
+			
+		}
+
+		string noon = ("12:00:00");
+	
+		cout << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "Records made after 12 am " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+		for (int i = 0; i < 10; i++)
+		{
+			if (student[i].date.substr(12, 9) >= noon) {
+				cout << endl;
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << student[i].date << endl;
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+				cout << "Name: " << student[i].name << endl;
+				cout << "ID: " << student[i].id << endl;
+				cout << "Group: " << student[i].group << endl;
+				cout << "Gender: " << student[i].gender << endl;
+				cout << "Form of education: " << student[i].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[i].grades[j] << " ";
+				cout << endl;
+
+			}
+
+		}
+		cout << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "Records made before 12 am " << endl; 
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+	
+		for (int i = 0; i < 10; i++)
+		{
+			if (student[i].date.substr(12, 9) < noon) {
+				cout << endl;
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << student[i].date << endl;
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY);
+				cout << "Name: " << student[i].name << endl;
+				cout << "ID: " << student[i].id << endl;
+				cout << "Group: " << student[i].group << endl;
+				cout << "Gender: " << student[i].gender << endl;
+				cout << "Form of education: " << student[i].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++) {
+					cout << student[i].grades[j] << " ";
+				}
+				cout << endl;
+
+			}
+
+		}
+		
+
+
+
+	}
+}
+
+
+void genderCount(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		int tempM = 0;
+
+		int tempF = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			if ((student[i].gender) == 'M')
+			{
+
+				tempM++;
+			}
+			if ((student[i].gender) == 'F')
+			{
+
+				tempF++;
+			}
+		}
+		if ((tempM == 0) && (tempF == 0)) {
+			cout << "No students were found" << endl;
+		}
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Male students: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cout << tempM << endl;
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Female students: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cout << tempF << endl;
+	}
+}
+
+void scholarshipCount(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+			}
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		int tempS = 0;
+		bool checkT = 0;
+
+		for (int i = 0; i < 10; i++)
+		{
+		
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+				if (student[i].grades[j] == 3) {
+					checkT = 1;
+				}
+			}
+			if (((student[i].depart) == "daytime") && (checkT==0))
+			{
+
+				tempS++;
+				
+			}
+			checkT = 0;
+		}
+			if (tempS == 0) {
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << "No students were found" << endl;
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			
+		}
+			else {
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << "Students with a scholarship: ";
+				SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+				cout << tempS << endl;
+			}
+	}
+}
+
+
+
+void gradesInfo(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+			}
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		int tempS = 0;
+		bool checkT = 0;
+		bool check45 = 0;
+		bool check5 = 0;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Students without scholarship: " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < 10; i++)
+		{
+
+	
+				for (int j = 0; j < 8; j++) {
+					file >> student[i].grades[j];
+					if (student[i].grades[j] == 3) {
+						checkT = 1;
+					}
+				}
+				if ((checkT == 1) || ((student[i].depart) != "daytime")) {
+					cout << "Name: " << student[i].name << endl;
+					cout << "ID: " << student[i].id << endl;
+					cout << "Group: " << student[i].group << endl;
+					cout << "Gender: " << student[i].gender << endl;
+					cout << "Form of education: " << student[i].depart << endl;
+					cout << "Term grades: ";
+					for (int j = 0; j < 8; j++)
+						cout << student[i].grades[j] << " ";
+					cout << endl;
+				}
+
+
+				checkT = 0;
+			
+		}
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Students with 5 grades only: " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+				if (student[i].grades[j] != 5) {
+					check5 = 1;
+				}
+			}
+
+
+				if (check5 == 0) {
+					cout << "Name: " << student[i].name << endl;
+					cout << "ID: " << student[i].id << endl;
+					cout << "Group: " << student[i].group << endl;
+					cout << "Gender: " << student[i].gender << endl;
+					cout << "Form of education: " << student[i].depart << endl;
+					cout << "Term grades: ";
+					for (int j = 0; j < 8; j++)
+						cout << student[i].grades[j] << " ";
+					cout << endl;
+				}
+
+				check5 = 0;
+			}
+
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Students with 5 and 4 grades: " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < 10; i++)
+		{
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+				if (student[i].grades[j] != 5) {
+					check5 = 1;
+				}
+			}
+			for (int j = 0; j < 8; j++) {
+				file >> student[i].grades[j];
+				if (student[i].grades[j] == 3) {
+					checkT = 1;
+				}
+			}
+
+
+
+			if ((check5 == 1) && (checkT==0)) {
+				cout << "Name: " << student[i].name << endl;
+				cout << "ID: " << student[i].id << endl;
+				cout << "Group: " << student[i].group << endl;
+				cout << "Gender: " << student[i].gender << endl;
+				cout << "Form of education: " << student[i].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[i].grades[j] << " ";
+				cout << endl;
+			}
+
+			checkT = 0;
+			check5 = 0;
+		}
+
+	}
+		
+		
+	}
+
+
+
+void listNumber(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+		int k;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cin >> k;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		
+				cout << "Name: " << student[k-1].name << endl;
+				cout << "ID: " << student[k-1].id << endl;
+				cout << "Group: " << student[k-1].group << endl;
+				cout << "Gender: " << student[k-1].gender << endl;
+				cout << "Form of education: " << student[k-1].depart << endl;
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[k-1].grades[j] << " ";
+				cout << endl;
+		
+		
+	}
+}
+
+
+void editRecord(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+		int n;
+		SetConsoleTextAttribute(N, FOREGROUND_RED | FOREGROUND_INTENSITY);
+		cout << "EDIT: " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Index of a student: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cin >> n;
+		n--;
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+	
+
+
+		cin.ignore(256, '\n');
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Name: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		getline(cin, student[n].name);
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Group: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cin >> student[n].group;
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Personal ID: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cin >> student[n].id;
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Gender (M/F): ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cin >> student[n].gender;
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Form of education ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "(daytime / evening / distance) : " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		cin >> student[n].depart;
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		cout << "Semester grades: ";
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+		for (int i = 0; i < 8; i++) {
+			cin >> student[n].grades[i];
+		}
+		student[n].date = currentTime();
+
+		
+
+		ofstream myfile;
+		myfile.open("students.txt");
+		
+
+	
+		for (int i = 0; i < 10; i++)
+		{
+
+			myfile << student[i].name << endl;
+			myfile << student[i].group << endl;
+			myfile << student[i].id << endl;
+			myfile << student[i].gender << endl;
+			myfile << student[i].depart << endl;
+			for (int j = 0; j < 7; j++) {
+				myfile << student[i].grades[j] << " ";
+			}
+			
+			
+				for (int j = 7; j < 8; j++) {
+					myfile << student[i].grades[j];
+				}
+				if (i== n) {
+							myfile << " ";
+						}
+			
+			myfile << student[i].date; 
+			if (i!=n) {
+				myfile << endl;
+			}
+		}
+
+		myfile.close();
+		
+		
+
+	}
+	file.close();
+}
+
+
+
+
+
+
+bool acompare(profile lhs, profile rhs) { 
+	return lhs.average > rhs.average;
+}
+
+void averageScore(fstream& file) {
+
+
+	file.open("students.txt");
+	if (!file.is_open())
+		cout << "Error!" << endl;
+	else
+	{
+
+		
+		profile student[10];
+		for (int i = 0; i < 10; i++)
+		{
+			getline(file, student[i].name);
+			file >> student[i].group >> student[i].id >> student[i].gender;
+			file >> student[i].depart;
+			for (int j = 0; j < 8; j++)
+				file >> student[i].grades[j];
+			getline(file, student[i].date);
+		}
+
+		file.close();
+
+		float sum = 0;
+		float av[10];
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 8; j++) {
+				sum += student[i].grades[j];
+			}
+			student[i].average = sum / 8;
+			sum = 0;
+		}
+		
+		sort(student, student + 10, acompare);
+
+
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN |  FOREGROUND_INTENSITY);
+		cout << "Sorted list based on student average score: " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+		for (int i = 0; i < 10; i++)
+		{
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Average score: ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+			cout << student[i].average << endl;
+				cout << "Name: " << student[i].name << endl;
+	
+				cout << "Group: " << student[i].group << endl;
+		
+				cout << "Term grades: ";
+				for (int j = 0; j < 8; j++)
+					cout << student[i].grades[j] << " ";
+				cout << endl;
+				cout << endl;
+			}
+
+
+
+	}
+}
+
+
+
+
+
+
+
+int main()
+{
+
+
+
+
+	fstream database;
+	profile student;
+	int answer_i = 0;
+	while (answer_i != 11) {
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "Menu " << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "1. Create a new record " << endl;
+		cout << "2. Edit student record " << endl;
+		cout << "3. Show all student data " << endl;
+		cout << "4. Show student data of a specific group (n) " << endl;
+		cout << "5. Sort student records based on average score " << endl;
+		cout << "6. Count male and female students " << endl;
+		cout << "7. Count students that will get a scholarship " << endl;
+		cout << "8. Show data based of student grades " << endl;
+		cout << "9. Show data of a student with a serial number (k) " << endl;
+		cout << "10. Sort records by date " << endl;
+		
+		SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "11. Exit" << endl;
+		SetConsoleTextAttribute(N, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		cin >> answer_i;
+		system("CLS");
+
+
+
+		switch (answer_i)
+		{
+		case (1): {
+
+
+
+	
+			cin.ignore(256, '\n');
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Name: ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			getline(cin, student.name);
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Group: ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cin >> student.group;
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Personal ID: ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cin >> student.id;
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Gender (M/F): ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cin >> student.gender;
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Form of education ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+			cout << "(daytime / evening / distance) : " << endl;
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cin >> student.depart;
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			cout << "Semester grades: ";
+			SetConsoleTextAttribute(N, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+			for (int i = 0; i < 8; i++)  cin >> student.grades[i];
+
+			student.date = currentTime();
+
+
+
+			int temp = 0;
+			for (int i = 0; i < 8; i++)
+			{
+				if (student.grades[i] == 2)
+					temp++;
+			}
+			if (temp == 0)
+			{
+
+				database.open("students.txt", ios::app);
+				if (!database.is_open())
+					cout << "Saving error!" << endl;
+				else
+				{
+					database << student.name << endl;
+					database << student.group << endl;
+					database << student.id << endl;
+					database << student.gender << endl;
+					database <<  student.depart << endl;
+					for (int i = 0; i < 8; i++) {
+						database << student.grades[i] << " ";
+					}
+					
+					database << student.date;
+					
+					database.close();
+					cout << "Profile saved!" << endl;
+				}
+			}
+			else
+				cout << "Student is expelled. Profile has not been saved." << endl;
+			break;
+		}
+
+		case (2): {
+			editRecord(database);
+			break;
+
+		}
+
+
+		case (3): {
+			showAll(database);
+			break;
+
+		}
+
+		case (4): {
+			groupSearch(database);
+			break;
+		}
+
+		case (5): {
+			averageScore(database);
+			break;
+		}
+
+
+
+		case (6): {
+			genderCount(database);
+			break;
+		}
+		
+		case (7): {
+			scholarshipCount(database);
+			break;
+		}
+		case (8): {
+			gradesInfo(database);
+			break;
+		}
+		case (9): {
+			listNumber(database);
+			break;
+		}
+		case (10): {
+			dateSearch(database);
+			break;
+		}
+		
+
+
+		}
+
+
+
+	}
+
+
+	return 0;
+}
+
+
