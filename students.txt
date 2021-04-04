@@ -1,0 +1,60 @@
+George Genrich
+574
+1120
+M
+daytime
+5 4 5 4 4 4 5 4 Mon Mar 22 12:28:14 2021
+Mike Baker
+574
+1121
+M
+daytime
+5 5 5 5 5 5 5 5 Tue Mar 23 11:27:54 2021
+Maksim Basuda
+348
+2120
+M
+evening
+4 4 4 4 5 4 4 4 Tue Mar 23 15:28:39 2021
+Shukhrat Kesikbaev
+348
+2121
+M
+evening
+5 5 5 4 5 5 4 4 Wed Mar 24 07:03:15 2021
+Valeria Melnikova
+348
+2122
+F
+evening
+5 5 5 5 5 5 5 5 Wed Mar 24 14:30:07 2021
+Elisabeth Bosak
+312
+3244
+F
+distance
+5 5 5 5 5 4 5 4 Wed Mar 24 10:15:07 2021
+Sofia Meijer
+312
+3245
+F
+distance
+3 3 3 4 3 3 3 3 Wed Mar 24 22:30:07 2021
+Daria Kitlyar
+323
+1501
+F
+daytime
+3 3 3 3 3 3 3 3 Fri Mar 26 12:32:59 2021
+Howard Fisher
+544
+1455
+M
+evening
+4 4 3 4 4 5 4 3 Fri Mar 26 10:30:59 2021
+Timur Glazkov
+348
+2123
+M
+evening
+5 4 5 5 5 4 5 5 Mon Mar 29 11:34:38 2021
